@@ -7,6 +7,7 @@ import CartPage from '@/views/CartPage.vue'
 import ProfilePage from '@/views/ProfilePage.vue'
 import ReaderPage from '@/views/ReaderPage.vue'
 import LibraryPage from '@/views/LibraryPage.vue'
+import ContactPage from '@/views/ContactPage.vue'
 
 
 const router = createRouter({
@@ -44,6 +45,11 @@ const router = createRouter({
       path: '/profile',
       name: 'profile',
       component: ProfilePage,
+    },
+    {
+      path: '/contact',
+      name: 'contact',
+      component: ContactPage,
     },
     {
       path: '/404',

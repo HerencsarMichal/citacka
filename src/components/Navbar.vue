@@ -1,7 +1,9 @@
 <template>
     <nav class="navbar">
         <div class="navbar-container">
+            <div class ="navbar-left">
             <div class="logo">📚</div>
+            </div>
         <!-- Navlinks-->
          <div class="nav-links">
             <router-link to="/" class="nav-link">Home</router-link>
@@ -13,6 +15,9 @@
             <router-link to="/contact" class="nav-link">Contact</router-link>
          <!-- </div> -->
          </div>
+         <div class="navbar-right">
+            <div class="cart">🛒</div>
+            </div>
     </div>
     </nav>
 
@@ -35,7 +40,6 @@ export default {
     padding: 0;
     margin: 0;
     height: 60px;
-    background: black;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
@@ -44,10 +48,31 @@ export default {
     display: flex;
     padding: 0 30px; /* Odsadenie od ľava pre nabar komponenty*/
     height: 100%;
+    justify-content: space-between;
 }
 .nav-links {
     padding: 0 30px;
     display: flex;
     gap:20px;
+    flex-grow: 1;
+    justify-content: center;
+}
+.navbar-left {
+    display: flex;
+    align-items: center;
+}
+.navbar-right {
+    display: flex;
+    align-items: center;
+}
+.logo {
+    font-size: 40px;
+    margin-right: 50px;
+}
+.cart {
+    font-size: 30px;
+    margin-left: 50px;
+    cursor: pointer;
+    transition: transform 0.2s;
 }
 </style>
