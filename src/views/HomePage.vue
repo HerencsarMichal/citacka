@@ -8,7 +8,7 @@
           <h1>Vitajte v BookReader</h1>
           <p class="subtitle">Vaša osobná digitálna knižnica</p>
           <div class="hero-buttons d-flex gap-3 justify-content-center">
-            <router-link to="/shop" class="btn btn-primary">
+            <router-link to="/catalog" class="btn btn-primary">
               Preskúmať knihy
             </router-link>
             <router-link to="/library" class="btn btn-secondary">
