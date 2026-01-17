@@ -302,7 +302,7 @@ Príjemné čítanie!
 
 <style scoped>
 .reader-page {
-  padding-top: 40px;
+  padding-top: 60px;
   min-height: 100vh;
   transition: background-color 0.3s;
 }
@@ -313,7 +313,7 @@ Príjemné čítanie!
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
+  min-height: calc(100vh - 70px);
   padding: 2rem;
   text-align: center;
 }
@@ -336,7 +336,7 @@ Príjemné čítanie!
 .reader-container {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: calc(100vh-70px);
 }
 
 .reader-header {
