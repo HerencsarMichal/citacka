@@ -19,40 +19,55 @@
     <div v-else class="reader-container">
       <!-- Header -->
       <div class="reader-header">
-        <Button variant="ghost" @click="$router.push('/library')">
+        <Button variant="ghost" size="small" @click="$router.push('/library')">
           ← Späť
         </Button>
 
         <div class="book-title-header">
-          <h1>{{ book.title }}</h1>
-          <p class="book-author">{{ book.author }}</p>
+          <div class="book-emoji" :style="{ backgroundColor: book.color }">
+            {{ book.emoji }}
+          </div>
+          <div class="book-info-header">
+            <h1>{{ book.title }}</h1>
+            <p class="book-author">{{ book.author }}</p>
+          </div>
         </div>
 
         <div class="reader-controls">
-          <Badge variant="info" size="small">{{ currentProgress }}%</Badge>
-          <Button variant="ghost" size="small" @click="settingsOpen = true">
+          <Badge variant="primary" size="small">{{ currentProgress }}%</Badge>
+          <Button variant="primary" size="small" @click="settingsOpen = true">
             ⚙️
           </Button>
         </div>
       </div>
 
       <!-- Content -->
-      <div class="reader-content" ref="readerContent" @scroll="handleScroll"
-        :style="{ backgroundColor: readerSettings.pageBackground }">
-        <div class="reader-text" :style="{
-          maxWidth: readerSettings.textWidth + 'px',
-          backgroundColor: readerSettings.backgroundColor
-        }">
+      <div 
+        class="reader-content" 
+        ref="readerContent" 
+        @scroll="handleScroll"
+        :style="{ backgroundColor: readerSettings.pageBackground }"
+      >
+        <div 
+          class="reader-text"
+          :style="{ 
+            maxWidth: readerSettings.textWidth + 'px',
+            backgroundColor: readerSettings.backgroundColor 
+          }"
+        >
           <h1 class="book-title-main">{{ book.title }}</h1>
           <p class="book-author-main">{{ book.author }}</p>
           <hr class="divider">
-
-          <div class="book-text" :style="{
-            fontSize: readerSettings.fontSize + 'px',
-            fontFamily: readerSettings.fontFamily,
-            lineHeight: readerSettings.lineHeight,
-            color: readerSettings.textColor
-          }">
+          
+          <div 
+            class="book-text"
+            :style="{
+              fontSize: readerSettings.fontSize + 'px',
+              fontFamily: readerSettings.fontFamily,
+              lineHeight: readerSettings.lineHeight,
+              color: readerSettings.textColor
+            }"
+          >
             {{ bookContent }}
           </div>
         </div>
@@ -62,12 +77,19 @@
       <div class="reader-footer">
         <div class="progress-bar-container">
           <div class="progress-bar">
-            <div class="progress-fill" :style="{ width: currentProgress + '%' }"></div>
+            <div 
+              class="progress-fill" 
+              :style="{ width: currentProgress + '%' }"
+            ></div>
           </div>
           <span class="progress-text">{{ currentProgress }}% prečítané</span>
         </div>
 
-        <Button variant="primary" size="small" @click="settingsOpen = true">
+        <Button 
+          variant="primary" 
+          size="small"
+          @click="settingsOpen = true"
+        >
           ⚙️ Nastavenia
         </Button>
       </div>
@@ -78,10 +100,17 @@
       </button>
 
       <!-- Settings Panel -->
-      <SettingsPanel :isOpen="settingsOpen" v-model:fontSize="readerSettings.fontSize"
-        v-model:fontFamily="readerSettings.fontFamily" v-model:lineHeight="readerSettings.lineHeight"
-        v-model:textWidth="readerSettings.textWidth" v-model:backgroundColor="readerSettings.backgroundColor"
-        v-model:textColor="readerSettings.textColor" @close="settingsOpen = false" @reset="resetSettings" />
+      <SettingsPanel
+        :isOpen="settingsOpen"
+        v-model:fontSize="readerSettings.fontSize"
+        v-model:fontFamily="readerSettings.fontFamily"
+        v-model:lineHeight="readerSettings.lineHeight"
+        v-model:textWidth="readerSettings.textWidth"
+        v-model:backgroundColor="readerSettings.backgroundColor"
+        v-model:textColor="readerSettings.textColor"
+        @close="settingsOpen = false"
+        @reset="resetSettings"
+      />
     </div>
   </div>
 </template>
@@ -124,10 +153,10 @@ export default {
   async mounted() {
     // Ulož default settings
     this.defaultSettings = { ...this.readerSettings }
-
+    
     // Načítaj uložené nastavenia
     this.loadSettings()
-
+    
     // Načítaj knihu
     await this.loadBook()
     this.restoreScrollPosition()
@@ -153,11 +182,14 @@ export default {
         }
 
         this.book = bookData
-
-        // Ak nie je dostupný obsah zo súboru, použije placeholder
-        if (bookData.content) {
+        
+        // Ak je dostupný obsah zo súboru, použi ho
+        if (bookData.content && bookData.content.trim().length > 0) {
           this.bookContent = bookData.content
+          console.log('✅ Kniha načítaná úspešne:', bookData.filename, bookData.content.length, 'znakov')
         } else {
+          // Použiť placeholder len ak obsah neexistuje
+          console.warn('⚠️ Obsah knihy nie je dostupný, používam placeholder')
           this.bookContent = this.generatePlaceholderContent()
         }
 
@@ -169,7 +201,7 @@ export default {
         }
 
       } catch (err) {
-        console.error('Error loading book:', err)
+        console.error('❌ Error loading book:', err)
         this.error = 'Chyba pri načítaní knihy'
       } finally {
         this.isLoading = false
@@ -180,9 +212,23 @@ export default {
       return `
 Toto je začiatok knihy "${this.book.title}" od autora ${this.book.author}.
 
-Keďže sobsah knihy narazil na určitú chybu a nie je k dispozícii, tento text slúži ako ukážka čítačky.
+Keďže skutočný obsah knihy nie je k dispozícii, tento text slúži ako ukážka čítačky.
 
-Keby to funguje, tak tu máme text z knihy :(
+V reálnej aplikácii by tu bol celý text knihy načítaný zo súboru /src/books/${this.book.filename}.
+
+Skúste scrollovať nadol, aby ste videli ako funguje sledovanie progressu čítania.
+
+Môžete si tiež upraviť nastavenia čítania - kliknite na tlačidlo "⚙️ Nastavenia" v pravom hornom rohu.
+
+Nastavenia zahŕňajú:
+- Veľkosť písma
+- Typ písma (font)
+- Riadkovanie
+- Šírku textu
+- Farbu pozadia
+- Farbu textu
+
+Všetky nastavenia sa automaticky ukladajú a budú zachované pri ďalšom otvorení čítačky.
 
 Príjemné čítanie!
 
@@ -256,6 +302,7 @@ Príjemné čítanie!
 
 <style scoped>
 .reader-page {
+  padding-top: 40px;
   min-height: 100vh;
   transition: background-color 0.3s;
 }
@@ -277,15 +324,8 @@ Príjemné čítanie!
 }
 
 @keyframes pulse {
-
-  0%,
-  100% {
-    transform: scale(1);
-  }
-
-  50% {
-    transform: scale(1.1);
-  }
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
 }
 
 .error-icon {
@@ -303,27 +343,53 @@ Príjemné čítanie!
   display: flex;
   align-items: center;
   gap: 2rem;
-  padding: 1rem 2rem;
-  background-color: white;
-  border-bottom: 2px solid var(--gray-200);
+  padding: 1.5rem 2rem;
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border-bottom: 3px solid var(--gold);
   flex-shrink: 0;
   position: relative;
   z-index: 100;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .book-title-header {
   flex: 1;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
   min-width: 0;
 }
 
-.book-title-header h1 {
-  font-size: 1.3rem;
+.book-emoji {
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s;
+}
+
+.book-emoji:hover {
+  transform: scale(1.05);
+}
+
+.book-info-header {
+  flex: 1;
+  min-width: 0;
+}
+
+.book-info-header h1 {
+  font-size: 1.4rem;
   margin-bottom: 0.25rem;
   color: var(--brown-dark);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  font-weight: 700;
 }
 
 .book-author {
@@ -348,32 +414,41 @@ Príjemné čítanie!
 .reader-text {
   margin: 0 auto;
   padding: 3rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
   transition: all 0.3s;
+  border: 2px solid rgba(0, 0, 0, 0.05);
+}
+
+.reader-text:hover {
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
 }
 
 .book-title-main {
-  font-size: 2.5rem;
+  font-size: 2.8rem;
   font-weight: 700;
   color: inherit;
   margin-bottom: 0.5rem;
   text-align: center;
+  line-height: 1.2;
 }
 
 .book-author-main {
-  font-size: 1.3rem;
+  font-size: 1.4rem;
   color: inherit;
   opacity: 0.7;
   text-align: center;
   margin-bottom: 2rem;
+  font-weight: 500;
 }
 
 .divider {
   border: none;
-  border-top: 2px solid currentColor;
+  height: 3px;
+  background: linear-gradient(90deg, transparent 0%, currentColor 50%, transparent 100%);
   opacity: 0.2;
-  margin: 2rem 0;
+  margin: 2.5rem 0;
+  border-radius: 2px;
 }
 
 .book-text {
@@ -382,14 +457,15 @@ Príjemné čítanie!
 }
 
 .reader-footer {
-  padding: 1rem 2rem;
-  background-color: white;
-  border-top: 2px solid var(--gray-200);
+  padding: 1.5rem 2rem;
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border-top: 3px solid var(--gold);
   flex-shrink: 0;
   display: flex;
   align-items: center;
   gap: 2rem;
   justify-content: space-between;
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .progress-bar-container {
@@ -398,49 +474,64 @@ Príjemné čítanie!
 
 .progress-bar {
   width: 100%;
-  height: 8px;
-  background-color: var(--gray-200);
-  border-radius: 4px;
+  height: 10px;
+  background: linear-gradient(90deg, #e0e0e0 0%, #f5f5f5 100%);
+  border-radius: 8px;
   overflow: hidden;
   margin-bottom: 0.5rem;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, var(--gold), var(--brown-medium));
+  background: linear-gradient(90deg, var(--gold) 0%, #FFA000 50%, var(--brown-medium) 100%);
   transition: width 0.3s ease;
+  box-shadow: 0 0 8px rgba(255, 179, 0, 0.5);
+  border-radius: 8px;
 }
 
 .progress-text {
-  font-size: 0.85rem;
-  color: var(--gray-600);
-  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--brown-medium);
+  font-weight: 700;
   display: block;
   text-align: center;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 /* Floating Settings Button */
 .floating-settings-btn {
   position: fixed;
-  bottom: 80px;
+  bottom: 100px;
   right: 2rem;
-  width: 56px;
-  height: 56px;
+  width: 64px;
+  height: 64px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--gold), #FFA000);
+  background: linear-gradient(135deg, var(--gold) 0%, #FFA000 100%);
   color: var(--brown-dark);
-  border: none;
-  font-size: 1.5rem;
+  border: 3px solid white;
+  font-size: 1.8rem;
   cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 8px 24px rgba(255, 179, 0, 0.4);
   transition: all 0.3s ease;
   z-index: 50;
   display: none;
+  animation: pulse-float 2s ease-in-out infinite;
+}
+
+@keyframes pulse-float {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-5px) scale(1.05);
+  }
 }
 
 .floating-settings-btn:hover {
-  transform: scale(1.1);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+  transform: scale(1.15) translateY(-5px);
+  box-shadow: 0 12px 32px rgba(255, 179, 0, 0.6);
+  animation: none;
 }
 
 .floating-settings-btn:active {
