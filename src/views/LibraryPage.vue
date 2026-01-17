@@ -2,16 +2,16 @@
   <div class="page">
     <div class="container">
       <div class="page-container card shadow rounded-xl">
-        
+
         <!-- Header -->
         <div class="page-header text-center mb-4">
           <h1>📚 Moja knižnica</h1>
           <p class="subtitle">Vaše zakúpené a dostupné knihy</p>
         </div>
-        
+
         <!-- Obsah -->
         <div class="page-content">
-          
+
           <!-- Štatistiky -->
           <div class="stats-grid mb-5">
             <div class="stat-card">
@@ -19,19 +19,19 @@
               <div class="stat-value">{{ totalBooks }}</div>
               <div class="stat-label">Kníh v knižnici</div>
             </div>
-            
+
             <div class="stat-card">
               <div class="stat-icon">✅</div>
               <div class="stat-value">{{ completedBooks }}</div>
               <div class="stat-label">Prečítaných</div>
             </div>
-            
+
             <div class="stat-card">
               <div class="stat-icon">📗</div>
               <div class="stat-value">{{ readingBooks }}</div>
               <div class="stat-label">Práve čítam</div>
             </div>
-            
+
             <div class="stat-card">
               <div class="stat-icon">⏰</div>
               <div class="stat-value">{{ plannedBooks }}</div>
@@ -41,39 +41,23 @@
 
           <!-- Filter tabs -->
           <div class="filter-tabs mb-4">
-            <Button 
-              variant="ghost"
-              size="small"
-              :class="{ active: activeFilter === 'all' }"
-              @click="activeFilter = 'all'"
-            >
+            <Button variant="ghost" size="small" :class="{ active: activeFilter === 'all' }"
+              @click="activeFilter = 'all'">
               Všetky knihy
             </Button>
-            
-            <Button 
-              variant="ghost"
-              size="small"
-              :class="{ active: activeFilter === 'reading' }"
-              @click="activeFilter = 'reading'"
-            >
+
+            <Button variant="ghost" size="small" :class="{ active: activeFilter === 'reading' }"
+              @click="activeFilter = 'reading'">
               Práve čítam
             </Button>
-            
-            <Button 
-              variant="ghost"
-              size="small"
-              :class="{ active: activeFilter === 'completed' }"
-              @click="activeFilter = 'completed'"
-            >
+
+            <Button variant="ghost" size="small" :class="{ active: activeFilter === 'completed' }"
+              @click="activeFilter = 'completed'">
               Prečítané
             </Button>
-            
-            <Button 
-              variant="ghost"
-              size="small"
-              :class="{ active: activeFilter === 'planned' }"
-              @click="activeFilter = 'planned'"
-            >
+
+            <Button variant="ghost" size="small" :class="{ active: activeFilter === 'planned' }"
+              @click="activeFilter = 'planned'">
               Plánujem čítať
             </Button>
           </div>
@@ -83,10 +67,7 @@
             <div class="empty-icon mb-3">📚</div>
             <h2 class="mb-3">Vaša knižnica je prázdna</h2>
             <p class="mb-4 text-secondary">Začnite pridávať knihy z katalógu</p>
-            <Button 
-              variant="primary"
-              @click="$router.push('/catalog')"
-            >
+            <Button variant="primary" @click="$router.push('/catalog')">
               Prejsť do katalógu
             </Button>
           </div>
@@ -100,19 +81,10 @@
 
           <!-- Zoznam kníh -->
           <div v-else class="books-grid">
-            <BookCard 
-              v-for="book in filteredBooks" 
-              :key="book.id"
-              :book="book"
-              type="library"
-            >
+            <BookCard v-for="book in filteredBooks" :key="book.id" :book="book" type="library">
               <!-- Custom slot pre actions -->
               <template #actions>
-                <Button 
-                  variant="primary"
-                  block
-                  @click="goToReader(book.id)"
-                >
+                <Button variant="primary" block @click="goToReader(book.id)">
                   {{ book.progress > 0 ? 'Pokračovať v čítaní' : 'Začať čítať' }}
                 </Button>
               </template>
@@ -120,7 +92,7 @@
           </div>
 
         </div>
-        
+
       </div>
     </div>
   </div>
@@ -294,7 +266,7 @@ export default {
     overflow-x: auto;
     flex-wrap: nowrap;
   }
-  
+
   .books-grid {
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 1rem;

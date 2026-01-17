@@ -37,32 +37,22 @@
       </div>
 
       <!-- Content -->
-      <div 
-        class="reader-content" 
-        ref="readerContent" 
-        @scroll="handleScroll"
-        :style="{ backgroundColor: readerSettings.pageBackground }"
-      >
-        <div 
-          class="reader-text"
-          :style="{ 
-            maxWidth: readerSettings.textWidth + 'px',
-            backgroundColor: readerSettings.backgroundColor 
-          }"
-        >
+      <div class="reader-content" ref="readerContent" @scroll="handleScroll"
+        :style="{ backgroundColor: readerSettings.pageBackground }">
+        <div class="reader-text" :style="{
+          maxWidth: readerSettings.textWidth + 'px',
+          backgroundColor: readerSettings.backgroundColor
+        }">
           <h1 class="book-title-main">{{ book.title }}</h1>
           <p class="book-author-main">{{ book.author }}</p>
           <hr class="divider">
-          
-          <div 
-            class="book-text"
-            :style="{
-              fontSize: readerSettings.fontSize + 'px',
-              fontFamily: readerSettings.fontFamily,
-              lineHeight: readerSettings.lineHeight,
-              color: readerSettings.textColor
-            }"
-          >
+
+          <div class="book-text" :style="{
+            fontSize: readerSettings.fontSize + 'px',
+            fontFamily: readerSettings.fontFamily,
+            lineHeight: readerSettings.lineHeight,
+            color: readerSettings.textColor
+          }">
             {{ bookContent }}
           </div>
         </div>
@@ -72,19 +62,12 @@
       <div class="reader-footer">
         <div class="progress-bar-container">
           <div class="progress-bar">
-            <div 
-              class="progress-fill" 
-              :style="{ width: currentProgress + '%' }"
-            ></div>
+            <div class="progress-fill" :style="{ width: currentProgress + '%' }"></div>
           </div>
           <span class="progress-text">{{ currentProgress }}% prečítané</span>
         </div>
 
-        <Button 
-          variant="primary" 
-          size="small"
-          @click="settingsOpen = true"
-        >
+        <Button variant="primary" size="small" @click="settingsOpen = true">
           ⚙️ Nastavenia
         </Button>
       </div>
@@ -95,17 +78,10 @@
       </button>
 
       <!-- Settings Panel -->
-      <SettingsPanel
-        :isOpen="settingsOpen"
-        v-model:fontSize="readerSettings.fontSize"
-        v-model:fontFamily="readerSettings.fontFamily"
-        v-model:lineHeight="readerSettings.lineHeight"
-        v-model:textWidth="readerSettings.textWidth"
-        v-model:backgroundColor="readerSettings.backgroundColor"
-        v-model:textColor="readerSettings.textColor"
-        @close="settingsOpen = false"
-        @reset="resetSettings"
-      />
+      <SettingsPanel :isOpen="settingsOpen" v-model:fontSize="readerSettings.fontSize"
+        v-model:fontFamily="readerSettings.fontFamily" v-model:lineHeight="readerSettings.lineHeight"
+        v-model:textWidth="readerSettings.textWidth" v-model:backgroundColor="readerSettings.backgroundColor"
+        v-model:textColor="readerSettings.textColor" @close="settingsOpen = false" @reset="resetSettings" />
     </div>
   </div>
 </template>
@@ -148,10 +124,10 @@ export default {
   async mounted() {
     // Ulož default settings
     this.defaultSettings = { ...this.readerSettings }
-    
+
     // Načítaj uložené nastavenia
     this.loadSettings()
-    
+
     // Načítaj knihu
     await this.loadBook()
     this.restoreScrollPosition()
@@ -177,7 +153,7 @@ export default {
         }
 
         this.book = bookData
-        
+
         // Ak nie je dostupný obsah zo súboru, použije placeholder
         if (bookData.content) {
           this.bookContent = bookData.content
@@ -301,8 +277,15 @@ Príjemné čítanie!
 }
 
 @keyframes pulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.1); }
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.1);
+  }
 }
 
 .error-icon {

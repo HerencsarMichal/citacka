@@ -1,6 +1,6 @@
 <template>
   <div class="temporary-page">
-    <h1>This is the Temporary Page</h1>
+    <h1>This is the Temporary Page/Error</h1>
   </div>
 </template>
 

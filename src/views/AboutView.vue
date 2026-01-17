@@ -2,25 +2,25 @@
   <div class="page">
     <div class="container">
       <div class="page-container card shadow rounded-xl">
-        
+
         <!-- Header -->
         <div class="page-header text-center mb-4">
           <h1>📚 O BookReader</h1>
           <p class="subtitle">Vaša digitálna knižnica pre pohodlné čítanie</p>
         </div>
-        
+
         <!-- Obsah -->
         <div class="page-content">
           <!-- O aplikácii -->
           <section class="mb-5">
             <h2 class="mb-3">Čo je BookReader?</h2>
             <p>
-              BookReader je moderná webová aplikácia navrhnutá pre milovníkov kníh. 
-              Umožňuje vám čítať knihy online s možnosťou prispôsobenia čítacieho prostredia 
+              BookReader je moderná webová aplikácia navrhnutá pre milovníkov kníh.
+              Umožňuje vám čítať knihy online s možnosťou prispôsobenia čítacieho prostredia
               presne podľa vašich potrieb - od veľkosti písma až po farby pozadia.
             </p>
             <p>
-              Naša platforma kombinuje jednoduchosť e-shopu s pokročilými funkciami čítačky, 
+              Naša platforma kombinuje jednoduchosť e-shopu s pokročilými funkciami čítačky,
               čo vám umožňuje nielen získať nové knihy, ale aj si ich užiť v optimálnom prostredí.
             </p>
           </section>
@@ -34,31 +34,31 @@
                 <h3>Personalizovaná čítačka</h3>
                 <p>Prispôsobte si veľkosť písma, font, riadkovanie a farby presne podľa seba.</p>
               </div>
-              
+
               <div class="feature-box">
                 <div class="feature-icon">🔖</div>
                 <h3>Záložky a poznámky</h3>
                 <p>Ukladajte si obľúbené miesta v knihe a pridávajte vlastné poznámky.</p>
               </div>
-              
+
               <div class="feature-box">
                 <div class="feature-icon">📊</div>
                 <h3>Sledovanie pokroku</h3>
                 <p>Pozrite si štatistiky čítania a históriu prečítaných kníh.</p>
               </div>
-              
+
               <div class="feature-box">
                 <div class="feature-icon">🌙</div>
                 <h3>Nočný režim</h3>
                 <p>Pohodlné čítanie aj v tme s tmavým režimom a sépiovou témou.</p>
               </div>
-              
+
               <div class="feature-box">
                 <div class="feature-icon">💾</div>
                 <h3>Automatické ukladanie</h3>
                 <p>Vaša pozícia v knihe sa ukladá automaticky - pokračujte kedykoľvek.</p>
               </div>
-              
+
               <div class="feature-box">
                 <div class="feature-icon">📱</div>
                 <h3>Responzívny dizajn</h3>
@@ -76,7 +76,7 @@
             </router-link>
           </section>
         </div>
-        
+
       </div>
     </div>
   </div>

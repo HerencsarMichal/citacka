@@ -2,22 +2,22 @@
   <div class="page">
     <div class="container">
       <div class="page-container card shadow rounded-xl">
-        
+
         <!-- Header -->
         <div class="page-header">
           <div>
             <h1>🛒 Nákupný košík</h1>
             <p class="subtitle">Vaše vybraté knihy</p>
           </div>
-          
+
           <Badge v-if="cartItemsCount > 0" variant="primary" size="large">
             {{ cartItemsCount }} {{ cartItemsCount === 1 ? 'položka' : 'položiek' }}
           </Badge>
         </div>
-        
+
         <!-- Obsah -->
         <div class="page-content">
-          
+
           <!-- Prázdny košík -->
           <div v-if="cartItems.length === 0" class="empty-cart text-center py-5">
             <div class="empty-icon mb-3">🛒</div>
@@ -32,35 +32,30 @@
           <div v-else>
             <!-- Zoznam položiek -->
             <div class="cart-items-list">
-              <CartItem
-                v-for="item in cartItems"
-                :key="item.bookId"
-                :book="getBookById(item.bookId)"
-                :quantity="item.quantity"
-                @update-quantity="updateQuantity(item.bookId, $event)"
-                @remove="removeItem(item.bookId)"
-              />
+              <CartItem v-for="item in cartItems" :key="item.bookId" :book="getBookById(item.bookId)"
+                :quantity="item.quantity" @update-quantity="updateQuantity(item.bookId, $event)"
+                @remove="removeItem(item.bookId)" />
             </div>
 
             <!-- Sumár -->
             <div class="cart-summary">
               <h3 class="summary-title">Súhrn objednávky</h3>
-              
+
               <div class="summary-row">
                 <span>Medzisúčet ({{ cartItemsCount }} ks):</span>
                 <span class="summary-value">{{ subtotal.toFixed(2) }} €</span>
               </div>
-              
+
               <div class="summary-row">
                 <span>Poštovné:</span>
                 <span class="summary-value">{{ shipping.toFixed(2) }} €</span>
               </div>
-              
+
               <div class="summary-row">
                 <span>DPH (20%):</span>
                 <span class="summary-value">{{ vat.toFixed(2) }} €</span>
               </div>
-              
+
               <div class="summary-row total">
                 <span class="total-label">Celkom:</span>
                 <span class="total-value">{{ total.toFixed(2) }} €</span>
@@ -76,7 +71,7 @@
               <Button variant="ghost" @click="handleClearCart">
                 🗑️ Vyprázdniť košík
               </Button>
-              
+
               <Button variant="primary" size="large" @click="handleCheckout">
                 ✅ Dokončiť objednávku ({{ total.toFixed(2) }} €)
               </Button>
@@ -84,7 +79,7 @@
           </div>
 
         </div>
-        
+
       </div>
     </div>
   </div>
@@ -158,7 +153,7 @@ export default {
     async handleCheckout() {
       if (confirm(`Potvrdiť objednávku za ${this.total.toFixed(2)} €?`)) {
         const result = await this.checkout()
-        
+
         if (result.success) {
           alert('✅ Objednávka úspešne dokončená!\n\nKnihy boli pridané do vašej knižnice.')
           this.$router.push('/library')
@@ -293,7 +288,7 @@ export default {
     width: 100%;
   }
 
-  .cart-actions > * {
+  .cart-actions>* {
     width: 100%;
   }
 }

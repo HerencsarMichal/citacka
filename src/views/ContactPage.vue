@@ -173,7 +173,6 @@ export default {
 }
 </script>
 
-
 <style scoped>
 .contact-page {
   padding-top: 80px;
