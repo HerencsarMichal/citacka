@@ -1,0 +1,1 @@
+import{_ as r,c as a,a as o,o as s}from"./index-BLClEv55.js";const t={},c={class:"temporary-page"};function n(_,e){return s(),a("div",c,[...e[0]||(e[0]=[o("h1",null,"This is the Temporary Page",-1)])])}const i=r(t,[["render",n]]);export{i as default};
