@@ -1,5 +1,6 @@
 // src/stores/books.js
 import { defineStore } from 'pinia'
+import booksData from '@/data/books.js'
 
 export const useBooksStore = defineStore('books', {
   state: () => ({
@@ -58,51 +59,24 @@ export const useBooksStore = defineStore('books', {
   },
 
   actions: {
-    // Inicializácia - načítanie kníh
+    // Inicializácia - načítanie kníh z importovaného súboru
     async initializeBooks() {
       this.isLoading = true
       
-      // Generovanie metadát pre 100 kníh
-      const bookMetadata = this.generateBookMetadata()
-      
-      // Simulácia načítania (v reálnej app by ste načítali zo servera)
-      this.allBooks = bookMetadata.map(meta => ({
-        ...meta,
-        stock: Math.floor(Math.random() * 20) + 5, // 5-25 kusov na sklade
-        price: Math.floor(Math.random() * 20) + 10, // 10-30 EUR
-        rating: (Math.random() * 2 + 3).toFixed(1) // 3.0-5.0
-      }))
-
-      this.isLoading = false
-    },
-
-    // Generovanie metadát pre knihy
-    generateBookMetadata() {
-      const authors = [
-        'J.K. Rowling', 'J.R.R. Tolkien', 'George Orwell', 'Paulo Coelho',
-        'Antoine de Saint-Exupéry', 'F. Scott Fitzgerald', 'Jane Austen',
-        'Ernest Hemingway', 'Gabriel García Márquez', 'Harper Lee'
-      ]
-      
-      const genres = ['Fantasy', 'Sci-Fi', 'Klasika', 'Romantika', 'Thriller', 'Dobrodružstvo']
-      const emojis = ['📚', '📖', '📕', '📗', '📘', '📙', '⚡', '💍', '👁️', '🧪', '👑', '🌟']
-      const colors = ['#FFD700', '#8B4513', '#2C3E50', '#E67E22', '#3498DB', '#9B59B6', '#E74C3C', '#27AE60']
-
-      const metadata = []
-      for (let i = 1; i <= 100; i++) {
-        metadata.push({
-          id: i,
-          filename: `Book${i}.txt`,
-          title: `Kniha ${i}`,
-          author: authors[Math.floor(Math.random() * authors.length)],
-          genre: genres[Math.floor(Math.random() * genres.length)],
-          emoji: emojis[Math.floor(Math.random() * emojis.length)],
-          color: colors[Math.floor(Math.random() * colors.length)],
-          description: `Fascinujúci príbeh, ktorý vás pohltí od prvej do poslednej strany. Táto kniha sa stala bestsellerom a získala množstvo ocenení.`,
-          pages: Math.floor(Math.random() * 400) + 100
-        })
+      try {
+        // Dáta sú už importované z @/data/books.js
+        if (booksData && Array.isArray(booksData)) {
+          this.allBooks = booksData
+          console.log(`✅ Načítaných ${booksData.length} kníh`)
+        } else {
+          throw new Error('Invalid books data format')
+        }
+      } catch (error) {
+        console.error('❌ Chyba pri načítaní kníh:', error)
+        this.allBooks = []
+      } finally {
+        this.isLoading = false
       }
-      return metadata
     },
 
     // Pridať knihu do košíka
@@ -236,44 +210,10 @@ export const useBooksStore = defineStore('books', {
         const book = this.allBooks.find(b => b.id === bookId)
         if (!book) return null
 
-        // Skús viaceré cesty
-        const possiblePaths = [
-          `/books/${book.filename}`,  // Pre produkciu s base path
-          `${import.meta.env.BASE_URL}books/${book.filename}`, // S explicit base
-          `./books/${book.filename}`, // Relatívna cesta
-        ]
-
-        let content = null
-        let successPath = null
-
-        for (const path of possiblePaths) {
-          try {
-            console.log(`🔍 Skúšam načítať: ${path}`)
-            const response = await fetch(path)
-            
-            if (response.ok) {
-              content = await response.text()
-              successPath = path
-              console.log(`✅ Úspech! Kniha načítaná z: ${path}`)
-              break
-            }
-          } catch (e) {
-            console.log(`❌ Cesta ${path} zlyhala:`, e.message)
-            continue
-          }
-        }
-
-        if (!content) {
-          console.warn(`⚠️ Kniha ${book.filename} sa nenašla na žiadnej ceste, použije sa placeholder`)
-          return {
-            ...book,
-            content: null
-          }
-        }
-        
+        // Kniha už má content v books.js, takže ho len vrátime
         return {
           ...book,
-          content
+          content: book.content || null
         }
       } catch (error) {
         console.error('Chyba pri načítaní knihy:', error)
