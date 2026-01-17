@@ -1,0 +1,1 @@
+import{_ as r,c as o,a,o as s}from"./index-Ai8kya1Y.js";const t={},c={class:"temporary-page"};function n(_,e){return s(),o("div",c,[...e[0]||(e[0]=[a("h1",null,"This is the Temporary Page/Error",-1)])])}const i=r(t,[["render",n]]);export{i as default};
