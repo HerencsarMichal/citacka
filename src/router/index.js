@@ -19,15 +19,21 @@ const router = createRouter({
       component: () => import('../views/AboutView.vue'),
     },
     {
-      path: '/reader/:bookId?',
-      name: 'reader',
-      component: () => import('../views/ReaderPage.vue'),
+      path: '/catalog',
+      name: 'catalog',
+      component: () => import('../views/CatalogPage.vue'),
       props: true,
     },
     {
       path: '/library',
       name: 'library',
       component: () => import('../views/LibraryPage.vue'),
+    },
+    {
+      path: '/reader/:bookId?',
+      name: 'reader',
+      component: () => import('../views/ReaderPage.vue'),
+      props: true,
     },
     {
       path: '/cart',
