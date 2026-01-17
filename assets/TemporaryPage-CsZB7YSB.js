@@ -1,0 +1,1 @@
+import{_ as o,c as r,a as s,o as t}from"./index-CkItGXuV.js";const a={},c={class:"temporary-page"};function n(_,e){return t(),r("div",c,[...e[0]||(e[0]=[s("h1",null,"Dosiahli ste poruchovú stránku.",-1)])])}const p=o(a,[["render",n]]);export{p as default};
