@@ -1,6 +1,6 @@
 <template>
   <div class="temporary-page">
-    <h1>Dosiahli ste poruchovú stránku</h1>
+    <h1>Dosiahli ste poruchovú stránku.</h1>
   </div>
 </template>
 
