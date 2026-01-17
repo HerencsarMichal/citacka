@@ -49,7 +49,7 @@
 
           <!-- Správa po odoslaní -->
           <div v-if="showSuccessMessage" class="alert alert-success mt-3">
-            ✅ <strong>Správa odoslaná!</strong> Ďakujeme za vašu správu. Ozveme sa vám čoskoro.
+            ✅ <strong>Správa odoslaná!</strong> Ďakujem za vašu správu. Ozvem sa vám čoskoro.
           </div>
 
           <!-- Chybová správa -->

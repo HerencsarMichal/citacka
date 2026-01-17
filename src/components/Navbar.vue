@@ -6,12 +6,12 @@
             </div>
             <!-- Navlinks-->
             <div class="nav-links">
-                <router-link to="/" class="nav-link">Home</router-link>
-                <router-link to="/reader" class="nav-link">Reader</router-link>
-                <router-link to="/library" class="nav-link">Library</router-link>
-                <router-link to="/cart" class="nav-link">Cart</router-link>
-                <router-link to="/about" class="nav-link">About</router-link>
-                <router-link to="/contact" class="nav-link">Contact</router-link>
+                <router-link to="/" class="nav-link">Domov</router-link>
+                <router-link to="/library" class="nav-link">Knihovňa</router-link>
+                <router-link to="/catalog" class="nav-link">Katalóg</router-link>
+                <router-link to="/cart" class="nav-link">Košík</router-link>
+                <router-link to="/about" class="nav-link">O nás</router-link>
+                <router-link to="/contact" class="nav-link">Kontakt</router-link>
             </div>
             <div class="navbar-right">
                 <router-link to="/cart" class="cart">🛒</router-link>
@@ -43,7 +43,8 @@ export default {
 .navbar-container {
     align-items: center;
     display: flex;
-    padding: 0 30px;     /* Odsadenie od ľava pre nabar komponenty*/
+    padding: 0 30px;
+    /* Odsadenie od ľava pre nabar komponenty*/
     height: 100%;
     justify-content: space-between;
 }
