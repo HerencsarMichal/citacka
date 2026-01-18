@@ -1,4 +1,4 @@
-import{s as d}from"./index-DgyBcrpG.js";const n=[{id:1,title:"Harry Potter a Kameň mudrcov",author:"J.K. Rowling",genre:"Fantasy",price:19.99,stock:15,pages:332,rating:4.8,description:"Prvý diel ságy o mladom čarodejníkovi Harrym Potterovi.",emoji:"⚡",color:"#800080",filename:"Book1.txt",content:`Tu by bol text knihy keby sme ho mali. 
+import{s as d}from"./index-CS0KZ9Gp.js";const n=[{id:1,title:"Harry Potter a Kameň mudrcov",author:"J.K. Rowling",genre:"Fantasy",price:19.99,stock:15,pages:332,rating:4.8,description:"Prvý diel ságy o mladom čarodejníkovi Harrym Potterovi.",emoji:"⚡",color:"#800080",filename:"Book1.txt",content:`Tu by bol text knihy keby sme ho mali. 
 
 
 

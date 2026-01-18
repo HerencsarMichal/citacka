@@ -1,0 +1,1 @@
+import{_ as o,c as a,a as s,o as r}from"./index-CS0KZ9Gp.js";const t={},c={class:"temporary-page"};function n(_,e){return r(),a("div",c,[...e[0]||(e[0]=[s("h1",null,"Dosiahli ste poruchovú stránku.",-1)])])}const d=o(t,[["render",n],["__scopeId","data-v-53c15ab1"]]);export{d as default};
