@@ -63,12 +63,22 @@ export const useBooksStore = defineStore('books', {
       this.isLoading = true
 
       try {
-        const module = await import('@/data/books.js')
+        const module = await import('@/data/books.js') // Lazy-Loading, dynamický import
         const booksData = module.default
-        // Dáta sú už importované z @/data/books.js
+
         if (booksData && Array.isArray(booksData)) {
-          this.allBooks = booksData
-          console.log(`✅ Načítaných ${booksData.length} kníh`)
+          // Načítanie uloženého stavu skladov z localStorage
+          const savedStocks = this.loadFromLocalStorage('booksStocks')
+
+          this.allBooks = booksData.map(book => ({
+            ...book,
+            // Automaticky nastav filename ak chýba
+            filename: book.filename || `Book${book.id}.txt`,
+            // Ak máme uložený stock pre túto knihu, použi ho
+            stock: savedStocks?.[book.id] !== undefined ? savedStocks[book.id] : book.stock
+          }))
+
+          console.log(`✅ Načítaných ${this.allBooks.length} kníh`)
         } else {
           throw new Error('Invalid books data format')
         }
@@ -79,6 +89,62 @@ export const useBooksStore = defineStore('books', {
         this.isLoading = false
       }
     },
+
+    // Funkcie pre localStorage
+    saveToLocalStorage(key, data) {
+      try {
+        localStorage.setItem(key, JSON.stringify(data))
+      } catch (error) {
+        console.error('Chyba pri ukladaní do localStorage:', error)
+      }
+    },
+
+    loadFromLocalStorage(key) {
+      try {
+        const data = localStorage.getItem(key)
+        return data ? JSON.parse(data) : null
+      } catch (error) {
+        console.error('Chyba pri načítaní z localStorage:', error)
+        return null
+      }
+    },
+
+    // Ulož state do localStorage
+    persistState() {
+      // Ulož košík
+      this.saveToLocalStorage('cart', this.cart)
+
+      // Ulož zakúpené knihy
+      this.saveToLocalStorage('purchasedBooks', this.purchasedBooks)
+
+      // Ulož stavy skladov
+      const stocks = {}
+      this.allBooks.forEach(book => {
+        stocks[book.id] = book.stock
+      })
+      this.saveToLocalStorage('booksStocks', stocks)
+
+      console.log('💾 State uložený do localStorage')
+    },
+
+    // Načítaj state z localStorage
+    restoreState() {
+      // Načítaj košík
+      const savedCart = this.loadFromLocalStorage('cart')
+      if (savedCart) {
+        this.cart = savedCart
+        console.log('🔄 Košík obnovený z localStorage')
+      }
+
+      // Načítaj zakúpené knihy
+      const savedPurchased = this.loadFromLocalStorage('purchasedBooks')
+      if (savedPurchased) {
+        this.purchasedBooks = savedPurchased
+        console.log('🔄 Knižnica obnovená z localStorage')
+      }
+    },
+
+
 
     // Pridať knihu do košíka
     addToCart(bookId, quantity = 1) {
@@ -106,7 +172,7 @@ export const useBooksStore = defineStore('books', {
           addedAt: new Date().toISOString()
         })
       }
-
+      this.persistState()
       return { success: true, message: 'Pridané do košíka' }
     },
 
@@ -115,6 +181,7 @@ export const useBooksStore = defineStore('books', {
       const index = this.cart.findIndex(item => item.bookId === bookId)
       if (index !== -1) {
         this.cart.splice(index, 1)
+        this.persistState()
       }
     },
 
@@ -135,12 +202,14 @@ export const useBooksStore = defineStore('books', {
       }
 
       item.quantity = quantity
+      this.persistState()
       return { success: true }
     },
 
     // Vyprázdniť košík
     clearCart() {
       this.cart = []
+      this.persistState()
     },
 
     // Dokončiť objednávku
@@ -183,6 +252,7 @@ export const useBooksStore = defineStore('books', {
       }
 
       this.clearCart()
+      this.persistState()
 
       return {
         success: true,
@@ -202,6 +272,7 @@ export const useBooksStore = defineStore('books', {
         } else if (progress > 0) {
           purchased.status = 'reading'
         }
+        this.persistState()
       }
     },
 
