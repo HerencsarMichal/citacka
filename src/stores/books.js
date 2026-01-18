@@ -1,5 +1,6 @@
 // src/stores/books.js
 import { defineStore } from 'pinia'
+import booksData from '@/data/books'
 
 export const useBooksStore = defineStore('books', {
   state: () => ({
@@ -63,9 +64,6 @@ export const useBooksStore = defineStore('books', {
       this.isLoading = true
 
       try {
-        const module = await import('@/data/books.js') // Lazy-Loading, dynamický import
-        const booksData = module.default
-
         if (booksData && Array.isArray(booksData)) {
           // Načítanie uloženého stavu skladov z localStorage
           const savedStocks = this.loadFromLocalStorage('booksStocks')
